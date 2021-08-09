@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-08-09T13:42:49.122Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36" etag="A4IwzGClRV6XmR-Z3s_W" version="14.9.5" type="github">
+<mxfile host="app.diagrams.net" modified="2021-08-09T13:57:50.287Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36" etag="nTQ41p47ukYOp_Nv2kCd" version="14.9.5" type="github">
   <diagram name="Page-1" id="e3a06f82-3646-2815-327d-82caf3d4e204">
     <mxGraphModel dx="2370" dy="1270" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
       <root>
@@ -190,6 +190,9 @@
         </mxCell>
         <mxCell id="t2RJurVs9qFkmTVlhtLP-35" value="cache" style="verticalLabelPosition=top;aspect=fixed;html=1;verticalAlign=bottom;strokeColor=none;align=center;outlineConnect=0;shape=mxgraph.citrix.cache_server;labelPosition=center;fontSize=15;" vertex="1" parent="1">
           <mxGeometry x="1380" y="800" width="71" height="97.5" as="geometry" />
+        </mxCell>
+        <mxCell id="t2RJurVs9qFkmTVlhtLP-36" value="elk (elasticsearch. logstash, kibana) ??" style="whiteSpace=wrap;html=1;fillColor=#eeeeee;fontSize=14;strokeColor=#36393d;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1540" y="706" width="320" height="370" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
