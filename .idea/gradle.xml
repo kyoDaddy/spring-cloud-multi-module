@@ -9,6 +9,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/common-entity" />
+            <option value="$PROJECT_DIR$/gateway" />
+            <option value="$PROJECT_DIR$/grpc-lib" />
+            <option value="$PROJECT_DIR$/user-api" />
           </set>
         </option>
       </GradleProjectSettings>

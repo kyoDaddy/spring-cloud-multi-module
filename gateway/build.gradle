@@ -1,0 +1,43 @@
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    /* spring security */
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    /* jwt https://mvnrepository.com/artifact/com.auth0/java-jwt */
+    implementation group: 'com.auth0', name: 'java-jwt', version: '3.18.1'
+
+    /* grpc */
+    implementation "net.devh:grpc-server-spring-boot-starter:${rootProject.ext.springBootGrpcVersion}"
+
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.7'
+
+    /* swagger */
+    implementation "io.springfox:springfox-boot-starter:3.0.0"
+    implementation "io.springfox:springfox-swagger-ui:3.0.0"
+    implementation "io.springfox:springfox-spring-webflux:3.0.0"
+
+    /* okhttp : https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp */
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.0.0-alpha.2'
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+    useJUnitPlatform()
+}

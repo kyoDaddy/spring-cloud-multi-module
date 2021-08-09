@@ -1,0 +1,22 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8080
+  shutdown:
+    grace-period: 5000
+
+spring:
+  application:
+    name: gateway
+  config:
+    import: classpath:daemon.yml
+    profiles:
+      include:
+        - daemon
+      group:
+        local: daemon-local
+        dev: daemon-dev
+
+  jwt:
+    secret-key: kyo
+    expires-minutes: 600 # 10hr

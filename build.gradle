@@ -17,3 +17,47 @@ buildscript {
 repositories {
     mavenCentral()
 }
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.mall'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        /* lombok */
+        implementation 'org.projectlombok:lombok'
+        // ..모듈들이 공통적으로 사용
+    }
+
+    task hello {
+        doLast {
+            task -> println "I'm $task.project.name"
+        }
+    }
+
+}
+
+
+project(':gateway') {
+    dependencies {
+        implementation project(':common-entity')
+        implementation project(':grpc-lib')
+    }
+}
+
+project(':user-api') {
+    dependencies {
+        implementation project(':common-entity')
+        implementation project(':grpc-lib')
+    }
+}
