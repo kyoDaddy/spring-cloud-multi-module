@@ -5,6 +5,7 @@
 1. msa 구성
    - webflux, grpc, r2dbc 등을 사용하여 Non-Blocking 한바퀴 돌려보기 
       - RxJava 공부 필요
+      - 함수형 프로그래밍 공부 필요
       - 비동기를 잘못쓰면 장애파티...시행 착오 존재할듯 
    - rabbitMQ로 생성/소비자 
     
