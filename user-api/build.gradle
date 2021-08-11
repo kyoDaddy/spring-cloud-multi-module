@@ -10,7 +10,20 @@ repositories {
 
 dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    /* reactor-core : https://mvnrepository.com/artifact/io.projectreactor/reactor-core */
+    implementation 'io.projectreactor:reactor-core:3.4.8'
+    /* r2dbc : https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-r2dbc */
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    /* r2dbc spi : https://mvnrepository.com/artifact/io.r2dbc/r2dbc-spi */
+    implementation 'io.r2dbc:r2dbc-spi:0.9.0.M2'
+    /* r2dbc-mariadb : https://mvnrepository.com/artifact/org.mariadb/r2dbc-mariadb */
+    implementation 'org.mariadb:r2dbc-mariadb:1.1.0-beta'
+    /* r2dbc-pool : https://mvnrepository.com/artifact/io.r2dbc/r2dbc-pool */
+    //implementation 'io.r2dbc:r2dbc-pool:0.9.0.M2'
+
+
     implementation "net.devh:grpc-server-spring-boot-starter:${rootProject.ext.springBootGrpcVersion}"
 
     implementation "io.grpc:grpc-netty:${rootProject.ext.grpcVersion}"
@@ -20,9 +33,14 @@ dependencies {
     /* okhttp */
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.0.0-alpha.2'
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
 
 }
 

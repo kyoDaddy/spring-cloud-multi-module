@@ -8,7 +8,7 @@ message GetUserByEmailRequest {
 }
 
 message GetUserByIdRequest {
-  string id = 1;
+  int64 id = 1;
 }
 
 message CreateUserRequest {
@@ -19,12 +19,16 @@ message CreateUserRequest {
 }
 
 message UpdateUserRequest {
-  string id = 1;
+  int64 id = 1;
   string fullName = 2;
 }
 
+message DeleteUserRequest {
+  int64 id = 1;
+}
+
 message UserResponse {
-  string id = 1;
+  int64 id = 1;
   string email = 2;
   string fullName = 3;
   string password = 4;
@@ -33,5 +37,8 @@ message UserResponse {
 service UserService {
   rpc findById(GetUserByIdRequest) returns (UserResponse);
   rpc findByEmail(GetUserByEmailRequest) returns (UserResponse);
+  rpc create(CreateUserRequest) returns (UserResponse);
+  rpc update(UpdateUserRequest) returns (UserResponse);
+  rpc deleteById(DeleteUserRequest) returns (UserResponse);
 }
 

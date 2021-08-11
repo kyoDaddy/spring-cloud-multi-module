@@ -8,8 +8,30 @@ server:
 spring:
   application:
     name: user-api
+  config:
+    import: classpath:daemon.yml
+    profiles:
+      include:
+        - daemon
+      group:
+        local: daemon-local
+        dev: daemon-dev
+
+
+
 
 grpc:
   server:
     port: 9898
   shutdownGrace: 30
+
+
+logging:
+  level:
+    io:
+      r2dbc:
+        pool: DEBUG
+    org:
+      springframework:
+        data:
+          r2dbc: DEBUG

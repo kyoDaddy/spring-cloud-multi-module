@@ -1,4 +1,4 @@
-package com.mall.gateway.process.login.model;
+package com.mall.gateway.process.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

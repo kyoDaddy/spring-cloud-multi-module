@@ -31,7 +31,8 @@ public class DefaultUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private final UUID id;
+    //private final UUID id;    // UUID를 키값으로 사용할때 사용
+    private final String id;
 
     private List<String> authorities;
 
