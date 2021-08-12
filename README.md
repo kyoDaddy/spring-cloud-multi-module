@@ -4,10 +4,10 @@
 목표 : 가벼운 쇼핑몰 구현
 1. msa 구성
    - webflux, grpc, r2dbc 등을 사용하여 Non-Blocking 한바퀴 돌려보기 
-      - RxJava 공부 필요
-      - 함수형 프로그래밍 공부 필요
+      - 스프링 리액터 or RxJava 공부 필요 
       - 비동기를 잘못쓰면 장애파티...시행 착오 존재할듯 
-   - rabbitMQ로 생성/소비자 
+   - kafka cluster 구성(jupiter 별도 구성말고 같은곳에 넣고 구성해보기...) 발행/구독 
+   - 사용자 및 관리자 접근할 gateway api를 물리적으로 분리
     
 2. db 관련 
    - JPA 공부 후 queryDsl-JPA 사용해보기 
@@ -25,7 +25,6 @@
 
 5. network 구성 
    - aws-lightsail 사용하여 인스턴스 구성 후 빌드/배포 적용까지 해보고 싶음.
-
 
 
 ![image](https://user-images.githubusercontent.com/25473606/129132424-2270443c-fc38-4a7b-8738-4cbd1976aaed.png)
