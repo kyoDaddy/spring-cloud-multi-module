@@ -49,14 +49,14 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                     .password(request.getPassword())
                     .fullName(request.getFullName())
                     .createdAt(LocalDateTime.now())
-                    .typeCode(1)
+                    .typeCode(4)
                     .build()).map(it -> {
-                    if(it == null)  throw new IllegalStateException();
-                    else            return it;
-                })
-                .map(UserGrpcService::toUserReply)
-                .transform(registerObs(responseObserver))
-                .subscribe();
+                        if(it == null)  throw new IllegalStateException();
+                        else            return it;
+                    })
+                    .map(UserGrpcService::toUserReply)
+                    .transform(registerObs(responseObserver))
+                    .subscribe();
 
         /* Dataclient 사용
         UserEntity userEntity = UserEntity.builder()
@@ -102,18 +102,14 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void deleteById(DeleteUserRequest request, StreamObserver<UserResponse> responseObserver) {
 
-        try {
-            userComponent.deleteById(request.getId());
-        } catch (Exception ex) {
-            log.error(ex.getMessage(), ex);
-            responseObserver.onError(Status.NOT_FOUND
-                    .withDescription(ex.getMessage())
-                    .asRuntimeException());
-            return;
-        }
-
-        responseObserver.onNext(UserResponse.getDefaultInstance());
-        responseObserver.onCompleted();
+        userComponent.findById(request.getId())
+            .map(user -> {
+                userComponent.deleteById(request.getId());
+                return user;
+            })
+            .map(UserGrpcService::toUserReply)
+            .transform(registerObs(responseObserver))
+            .subscribe();
 
         /*
         Mono<UserEntity> info = userRepository.findById(request.getId());
@@ -133,7 +129,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     }
 
     private static <T> Function<Mono<T>, Mono<T>> registerObs(StreamObserver<T> responseObserver) {
-        return bookReplyMono -> bookReplyMono
+        return userReplyMono -> userReplyMono
                 .doOnSuccess(responseObserver::onNext)      //unary라 onNext 1회만 호출 가능 //데이터 전송
                 .doOnError(responseObserver::onError)
                 .doAfterTerminate(responseObserver::onCompleted);

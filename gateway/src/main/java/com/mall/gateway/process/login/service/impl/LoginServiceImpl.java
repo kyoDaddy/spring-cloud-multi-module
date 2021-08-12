@@ -17,8 +17,10 @@ import com.mall.gateway.process.login.service.LoginService;
 import com.mall.gateway.process.security.service.AuthTokenService;
 import com.mall.gateway.process.security.service.DefaultUserDetailsJwtClaimsConverter;
 import com.mall.gateway.process.security.service.impl.DefaultUserDetails;
+import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,31 +48,30 @@ public class LoginServiceImpl implements LoginService {
 
     private final DaemonProp daemonProp;
 
+    @GrpcClient("user-api-server")
+    private UserServiceGrpc.UserServiceBlockingStub userServiceStub;
+
     @Override
     public Mono<LoginResponse> login(LoginRequest request) {
 
-        UserResponse userResponse = null;
         try {
-            ManagedChannel channel = ManagedChannelBuilder.forAddress(daemonProp.getGrpcIp(), daemonProp.getGrpcPort()).usePlaintext().build();
-            UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
-            userResponse = stub.withDeadlineAfter(3, TimeUnit.SECONDS).findByEmail(GetUserByEmailRequest.newBuilder()
-                    .setEmail(request.getEmail())
-                    .build()
-            );
-            channel.shutdown();
-        }
-        catch (Exception e) {
-            log.info("error => {}", e);
-        }
 
-        if(userResponse == null) {
-            return Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "등록된 회원이 없습니다."));
-        }
-        else if(!passwordEncoder.matches(request.getPassword(), userResponse.getPassword())) {
-            return Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."));
-        }
+            GetUserByEmailRequest grpcRequest = GetUserByEmailRequest.newBuilder().setEmail(request.getEmail()).build();
+            UserResponse reply = userServiceStub.findByEmail(grpcRequest);
 
-        return getLoginResponseMono(userResponse);
+            if(reply.getEmail().isEmpty()) {
+                return Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "등록된 회원이 없습니다."));
+            }
+            else if(!passwordEncoder.matches(request.getPassword(), reply.getPassword())) {
+                return Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."));
+            }
+
+            return getLoginResponseMono(reply);
+
+        }
+        catch (final StatusRuntimeException e) {
+            return Mono.error(new UnauthorizedException(HttpStatus.INTERNAL_SERVER_ERROR, "FAILED with " + e.getStatus().getCode().name()));
+        }
 
     }
 
@@ -82,41 +83,30 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Mono<LoginResponse> register(CreateUser user) {
 
-        UserResponse userResponse = null;
         try {
-            ManagedChannel channel = ManagedChannelBuilder.forAddress(daemonProp.getGrpcIp(), daemonProp.getGrpcPort()).usePlaintext().build();
-            UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
-            userResponse = stub.withDeadlineAfter(3, TimeUnit.SECONDS).findByEmail(GetUserByEmailRequest.newBuilder()
-                    .setEmail(user.getEmail())
-                    .build()
-            );
-            channel.shutdown();
-        }
-        catch (Exception e) {
-            log.info("error => {}", e);
-        }
 
-        if(!Objects.isNull(userResponse.getId())) {
-            return Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "이미 등록된 회원입니다.(" + user.getEmail() + ")"));
-        }
+            GetUserByEmailRequest grpcRequest = GetUserByEmailRequest.newBuilder().setEmail(user.getEmail()).build();
+            UserResponse reply = userServiceStub.findByEmail(grpcRequest);
 
-        try {
-            ManagedChannel channel = ManagedChannelBuilder.forAddress(daemonProp.getGrpcIp(), daemonProp.getGrpcPort()).usePlaintext().build();
-            UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
-            userResponse = stub.withDeadlineAfter(3, TimeUnit.SECONDS).create(CreateUserRequest.newBuilder()
+            if(!reply.getEmail().isEmpty()) {
+                return Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "이미 등록된 회원입니다.(" + user.getEmail() + ")"));
+            }
+
+            reply = userServiceStub.withDeadlineAfter(3, TimeUnit.SECONDS).create(CreateUserRequest.newBuilder()
                     .setEmail(user.getEmail())
                     .setFullName(user.getFullName())
                     .setPassword(passwordEncoder.encode(user.getPassword()))
                     .build()
             );
-            channel.shutdown();
+
+            assert reply != null;
+            return getLoginResponseMono(reply);
+
         }
-        catch (Exception e) {
-            log.info("error => {}", e);
+        catch (final StatusRuntimeException e) {
+            return Mono.error(new UnauthorizedException(HttpStatus.INTERNAL_SERVER_ERROR, "FAILED with " + e.getStatus().getCode().name()));
         }
 
-        assert userResponse != null;
-        return getLoginResponseMono(userResponse);
     }
 
     @NotNull

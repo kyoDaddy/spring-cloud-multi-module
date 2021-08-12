@@ -4,13 +4,44 @@
 daemon:
   nick-name: Developer local
   root-uri: "http://127.0.0.1:8080"
-  grpc-ip: 127.0.0.1
-  grpc-port: 9898
 
+grpc:
+  client:
+    user-api-server:
+      address: 'static://127.0.0.1:9898'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 ---
+
+spring:
+  profiles: demon-local
+
+daemon:
+  nick-name: Developer local
+  root-uri: "http://127.0.0.1:8080"
+
+grpc:
+  client:
+    user-api-server:
+      address: 'static://127.0.0.1:9898'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+---
+spring:
+  profiles: demon-dev
+
 daemon:
   nick-name: Developer dev
   root-uri: "http://127.0.0.1:9090"
-  grpc-ip: 127.0.0.1
-  grpc-port: 9898
+
+grpc:
+  client:
+    user-api-server:
+      address: 'static://127.0.0.1:9898'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

@@ -7,12 +7,12 @@ spring:
     username: mall
     password: test!1234
     # config from https://github.com/r2dbc/r2dbc-pool
-#    pool:
-#      initialSize: 10
-#      maxSize: 100
-#      #30 minutes
-#      maxIdleTime: PT30M
-#      validationQuery: SELECT 1
+    pool:
+      initialSize: 10
+      maxSize: 100
+      #30 minutes
+      maxIdleTime: PT30M
+      validationQuery: SELECT 1
 
 daemon:
   nick-name: Developer oo
@@ -27,12 +27,12 @@ spring:
     username: mall
     password: test!1234
     # config from https://github.com/r2dbc/r2dbc-pool
-#    pool:
-#      initialSize: 10
-#      maxSize: 100
-#      #30 minutes
-#      maxIdleTime: PT30M
-#      validationQuery: SELECT 1
+    pool:
+      initialSize: 10
+      maxSize: 100
+      #30 minutes
+      maxIdleTime: PT30M
+      validationQuery: SELECT 1
 
 
 daemon:
@@ -48,12 +48,12 @@ spring:
     username: mall
     password: test!1234
     # config from https://github.com/r2dbc/r2dbc-pool
-#    pool:
-#      initialSize: 10
-#      maxSize: 100
-#      #30 minutes
-#      maxIdleTime: PT30M
-#      validationQuery: SELECT 1
+    pool:
+      initialSize: 10
+      maxSize: 100
+      #30 minutes
+      maxIdleTime: PT30M
+      validationQuery: SELECT 1
 
 daemon:
   nick-name: Developer dev

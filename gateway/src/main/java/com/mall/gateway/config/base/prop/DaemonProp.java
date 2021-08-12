@@ -27,15 +27,11 @@ public class DaemonProp {
 
     private String nickName;
     private String rootUri;
-    private String grpcIp;
-    private int grpcPort;
 
     @PostConstruct
     public void showProperties() {
         log.info("daemon.nick-name => {}", nickName);
         log.info("daemon.root-uri => {}", rootUri);
-        log.info("daemon.grpc-ip => {}", grpcIp);
-        log.info("daemon.grpc-port => {}", grpcPort);
     }
 
 }
