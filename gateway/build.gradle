@@ -21,6 +21,9 @@ dependencies {
     /* grpc autoconfig : https://mvnrepository.com/artifact/net.devh/grpc-client-spring-boot-autoconfigure */
     implementation "net.devh:grpc-client-spring-boot-autoconfigure:${rootProject.ext.springBootGrpcVersion}"
 
+    /* 추후 던질때 사용 logstash logback : https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder */
+    //implementation 'net.logstash.logback:logstash-logback-encoder:6.6'
+
 
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'

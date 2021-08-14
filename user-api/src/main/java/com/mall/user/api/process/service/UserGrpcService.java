@@ -28,6 +28,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void findById(GetUserByIdRequest request, StreamObserver<UserResponse> responseObserver) {
         userComponent.findById(request.getId())
+                .log()
                 .map(UserGrpcService::toUserReply)
                 .transform(registerObs(responseObserver))
                 .subscribe();
@@ -36,6 +37,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void findByEmail(GetUserByEmailRequest request, StreamObserver<UserResponse> responseObserver) {
         userComponent.findByEmail(request.getEmail())
+                .log()
                 .map(UserGrpcService::toUserReply)
                 .transform(registerObs(responseObserver))
                 .subscribe();
@@ -54,6 +56,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                         if(it == null)  throw new IllegalStateException();
                         else            return it;
                     })
+                    .log()
                     .map(UserGrpcService::toUserReply)
                     .transform(registerObs(responseObserver))
                     .subscribe();
@@ -80,6 +83,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void update(UpdateUserRequest request, StreamObserver<UserResponse> responseObserver) {
 
         userComponent.findById(request.getId())
+                .log()
             .flatMap(dbEntity -> {
                 dbEntity.setFullName(request.getFullName());
                 return userComponent.save(dbEntity);
@@ -107,6 +111,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                 userComponent.deleteById(request.getId());
                 return user;
             })
+            .log()
             .map(UserGrpcService::toUserReply)
             .transform(registerObs(responseObserver))
             .subscribe();

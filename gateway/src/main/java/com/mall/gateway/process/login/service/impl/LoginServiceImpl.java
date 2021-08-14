@@ -77,6 +77,17 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Mono<LoginResponse> authenticate(LoginRequest user) {
+        
+        /* 처음 사용한 grpc 호출 구문 sample로 주석처리
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(daemonProp.getGrpcIp(), daemonProp.getGrpcPort()).usePlaintext().build();
+        UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
+        userResponse = stub.withDeadlineAfter(3, TimeUnit.SECONDS).findByEmail(GetUserByEmailRequest.newBuilder()
+                .setEmail(request.getEmail())
+                .build()
+        );
+        channel.shutdown();
+        */
+        
         return null;
     }
 
@@ -119,7 +130,7 @@ public class LoginServiceImpl implements LoginService {
 
         final Map<String, Object> claims = defaultUserDetailsJwtClaimsConverter.convert(userDetails);
 
-        return authTokenService.sign(claims)
+        return authTokenService.sign(claims).log()
                 .map(token -> LoginResponse.builder()
                         .expiresIn(jwtProp.getExpiresMinutes() * 60L)
                         .tokenType("bearer")
