@@ -33,5 +33,4 @@ logging:
         pool: DEBUG
     org:
       springframework:
-        data:
-          r2dbc: DEBUG
+        r2dbc: DEBUG

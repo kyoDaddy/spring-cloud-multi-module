@@ -1,30 +1,34 @@
 package com.mall.user.api;
 
-import com.mall.user.api.process.entity.UserEntity;
-import com.mall.user.api.process.repository.UserRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mariadb.r2dbc.MariadbConnectionConfiguration;
-import org.mariadb.r2dbc.MariadbConnectionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
-import org.springframework.data.r2dbc.core.DatabaseClient;
-import reactor.core.publisher.Flux;
-import reactor.test.StepVerifier;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
-@Profile("daemon-local")
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserApiApplicationTests {
 
-    @Autowired
-    private UserRepository userRepository;
+    @LocalServerPort
+    int port;
+
+    WebTestClient webClient;
+
+    @BeforeAll
+    public void setup() {
+        this.webClient = WebTestClient.bindToServer()
+                .baseUrl("http://localhost:" + this.port)
+                .build();
+    }
 
     @Test
     void contextLoads() {
-
-        Flux<UserEntity> list = userRepository.findAll();
-        list.subscribe(value -> System.out.println(value.getId()));
-
+        /* test sample
+        this.webClient.get().uri("/posts")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBodyList(Post.class).hasSize(2);
+        */
 
     }
 
