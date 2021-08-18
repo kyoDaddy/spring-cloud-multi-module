@@ -1,13 +1,15 @@
 package com.mall.common.utils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DateUtils {
 
     public static String getDate(String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format, java.util.Locale.KOREA);
-        return sdf.format(new Date());
+        LocalDate date = LocalDate.now();
+        return date.format(DateTimeFormatter.ofPattern(format));
     }
 
 }
