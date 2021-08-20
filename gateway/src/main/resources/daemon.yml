@@ -16,7 +16,7 @@ grpc:
 ---
 
 spring:
-  profiles: demon-local
+  profiles: daemon-local
 
 daemon:
   nick-name: Developer local
@@ -32,7 +32,7 @@ grpc:
 
 ---
 spring:
-  profiles: demon-dev
+  profiles: daemon-dev
 
 daemon:
   nick-name: Developer dev
