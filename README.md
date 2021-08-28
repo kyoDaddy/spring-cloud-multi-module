@@ -3,16 +3,16 @@
 
 목표 : 가벼운 쇼핑몰 구현
 1. msa 구성
-   - webflux, grpc, r2dbc 등을 사용하여 Non-Blocking 한바퀴 돌려보기 
+   - spring-cloud, webflux, grpc, r2dbc 등을 사용하여 Non-Blocking 한바퀴 돌려보기 
       - 스프링 리액터 or RxJava 공부 필요 
       - 비동기를 잘못쓰면 장애파티...시행 착오 존재할듯 
-   - kafka cluster 구성(jupiter 별도 구성말고 같은곳에 넣고 구성해보기...) 발행/구독 
+   - kafka 발행/구독 
    - 사용자 및 관리자 접근할 gateway api를 물리적으로 분리
     
 2. db 관련 
    - JPA 공부 후 queryDsl-JPA 사용해보기 
    - r2dbc 사용해보기 (실제 사용하면 어떨지?)
-   - mariadb, postgresql 사용
+   - h2로 대체..
    
 3. domain 기반 architecture 구성 ? cqrs 패턴을 사용?
    - Command 도메인 DB와 Query 도메인의 DB를 분리하여, 각각의 도메인 목적에 맞게 집중하여 개발해볼까? 
