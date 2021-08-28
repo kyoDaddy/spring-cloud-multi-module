@@ -1,18 +1,20 @@
 package com.mall.user.api.process.entity;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table("users")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -20,15 +22,15 @@ public class UserEntity {
 
     private String email;
 
-    @Column("full_name")
+    @Column(name = "full_name")
     private String fullName;
 
     private String password;
 
-    @Column("created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column("type_code")
+    @Column(name = "type_code")
     private int typeCode;
 
 

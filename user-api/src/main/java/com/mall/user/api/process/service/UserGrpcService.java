@@ -1,16 +1,15 @@
 package com.mall.user.api.process.service;
 
 import com.grpc.lib.*;
+import com.mall.common.utils.ObjectMapperUtils;
 import com.mall.user.api.process.entity.UserEntity;
 import com.mall.user.api.process.repository.UserComponent;
-import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.function.Function;
 
@@ -29,7 +28,8 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void findById(GetUserByIdRequest request, StreamObserver<UserResponse> responseObserver) {
         userComponent.findById(request.getId())
                 .log()
-                .map(UserGrpcService::toUserReply)
+                //.map(UserGrpcService::toUserReply)
+                .map((u) -> ObjectMapperUtils.map(u, UserResponse.class))
                 .transform(registerObs(responseObserver))
                 .subscribe();
     }
@@ -38,13 +38,30 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void findByEmail(GetUserByEmailRequest request, StreamObserver<UserResponse> responseObserver) {
         userComponent.findByEmail(request.getEmail())
                 .log()
-                .map(UserGrpcService::toUserReply)
+                //.map(UserGrpcService::toUserReply)
+                .map((u) -> ObjectMapperUtils.map(u, UserResponse.class))
                 .transform(registerObs(responseObserver))
                 .subscribe();
     }
 
     @Override
     public void create(CreateUserRequest request, StreamObserver<UserResponse> responseObserver) {
+        // entity mapper 사용
+        UserEntity userEntity = ObjectMapperUtils.map(request, UserEntity.class);
+        userEntity.setTypeCode(4);
+        userEntity.setCreatedAt(LocalDateTime.now());
+
+        userComponent.save(userEntity).map(it -> {
+                    if(it == null)  throw new IllegalStateException();
+                    else            return it;
+                })
+                .log()
+                //.map(UserGrpcService::toUserReply)
+                .map((u) -> ObjectMapperUtils.map(u, UserResponse.class))
+                .transform(registerObs(responseObserver))
+                .subscribe();
+
+        /* entity builder 사용
         userComponent.save(
                 UserEntity.builder()
                     .email(request.getEmail())
@@ -60,6 +77,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                     .map(UserGrpcService::toUserReply)
                     .transform(registerObs(responseObserver))
                     .subscribe();
+        */
 
         /* Dataclient 사용
         UserEntity userEntity = UserEntity.builder()
@@ -88,7 +106,8 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                 dbEntity.setFullName(request.getFullName());
                 return userComponent.save(dbEntity);
             })
-            .map(UserGrpcService::toUserReply)
+            //.map(UserGrpcService::toUserReply)
+            .map((u) -> ObjectMapperUtils.map(u, UserResponse.class))
             .transform(registerObs(responseObserver))
             .subscribe();
 
@@ -112,7 +131,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                 return user;
             })
             .log()
-            .map(UserGrpcService::toUserReply)
+            .map((u) -> ObjectMapperUtils.map(u, UserResponse.class))
             .transform(registerObs(responseObserver))
             .subscribe();
 

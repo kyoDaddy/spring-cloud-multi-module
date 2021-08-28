@@ -36,6 +36,8 @@ subprojects {
     dependencies {
         /* lombok */
         implementation 'org.projectlombok:lombok'
+        /* modelMapper : https://mvnrepository.com/artifact/org.modelmapper/modelmapper */
+        implementation 'org.modelmapper:modelmapper:2.4.4'
         // ..모듈들이 공통적으로 사용
     }
 
