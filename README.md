@@ -27,7 +27,8 @@
    - aws-lightsail 사용하여 인스턴스 구성 후 빌드/배포 적용까지 해보고 싶음.
 
 
-![image](https://user-images.githubusercontent.com/25473606/131220146-abea372b-09d5-40e7-a419-f4d762b54db8.png)
+![mall-architecture](https://user-images.githubusercontent.com/25473606/131296698-9cc0362d-4a56-4d9e-9a8c-913173eb214d.png)
+
 
 
 
