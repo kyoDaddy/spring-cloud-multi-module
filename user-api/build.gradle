@@ -12,6 +12,9 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
+    // discovery-service
+    //implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     /* reactor-core : https://mvnrepository.com/artifact/io.projectreactor/reactor-core */

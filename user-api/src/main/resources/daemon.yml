@@ -3,11 +3,16 @@
 
 spring:
   r2dbc:
-    #h2 console 에서 jdbc:h2:~/malluser 로 데이터베이스 생성
-    url: r2dbc:h2:mem:///malluser?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: r2dbc:mariadb://127.0.0.1:49168/user
+    username: mall
+    password: test!1234
+    # config from https://github.com/r2dbc/r2dbc-pool
+    pool:
+      initialSize: 10
+      maxSize: 100
+      #30 minutes
+      maxIdleTime: PT30M
+      validationQuery: SELECT 1
 
 daemon:
   nick-name: Developer oo

@@ -1,0 +1,25 @@
+dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${rootProject.ext.springCloudVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+/*
+
+task wrapper(type: Wrapper) {
+    //gradleVersion = '0.9'
+}
+*/
+
+
+//tasks.register("prepareKotlinBuildScriptModel"){}
+
