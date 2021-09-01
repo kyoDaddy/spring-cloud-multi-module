@@ -5,6 +5,7 @@ buildscript {
         grpcVersion = '1.33.1'
         springBootGrpcVersion = '2.12.0.RELEASE'
         springCloudVersion = '2020.0.3'
+        springCloudEurekaVersion = '3.0.3'
     }
     repositories {
         mavenCentral()
@@ -58,7 +59,7 @@ project(':gateway') {
     }
 }
 
-project(':user-api') {
+project(':user-service') {
     dependencies {
         implementation project(':common-entity')
         implementation project(':grpc-lib')

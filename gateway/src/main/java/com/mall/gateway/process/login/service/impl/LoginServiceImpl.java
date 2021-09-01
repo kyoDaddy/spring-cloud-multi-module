@@ -48,7 +48,7 @@ public class LoginServiceImpl implements LoginService {
 
     private final DaemonProp daemonProp;
 
-    @GrpcClient("user-api-server")
+    @GrpcClient("user-service-server")
     private UserServiceGrpc.UserServiceBlockingStub userServiceStub;
 
     @Override

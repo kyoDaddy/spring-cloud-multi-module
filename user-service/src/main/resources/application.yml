@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: user-service
+  config:
+    import: classpath:daemon.yml
+  profiles:
+    include:
+      - daemon
+    group:
+      local: daemon-local
+      dev: daemon-dev
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  #random port
+  port: 0
+  shutdown:
+    grace-period: 5000
+
+grpc:
+  server:
+    port: 9898
+  shutdownGrace: 30
+
+eureka:
+  #Load Balancer
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+
+logging:
+  level:
+    io:
+      r2dbc:
+        pool: DEBUG
+    org:
+      springframework:
+        r2dbc: DEBUG
+        data:
+          r2dbc:
+            connectionfactory: DEBUG

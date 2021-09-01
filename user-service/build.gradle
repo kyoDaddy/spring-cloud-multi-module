@@ -1,0 +1,65 @@
+apply plugin: 'com.google.protobuf'
+
+group = 'com.grpc'
+version = '0.1.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // discovery-service
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${rootProject.ext.springCloudEurekaVersion}"
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // reactor-core : https://mvnrepository.com/artifact/io.projectreactor/reactor-core
+    implementation 'io.projectreactor:reactor-core:3.4.8'
+
+    // r2dbc : https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-r2dbc
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    // r2dbc spi : https://mvnrepository.com/artifact/io.r2dbc/r2dbc-spi
+    implementation 'io.r2dbc:r2dbc-spi'
+    // r2dbc-pool : https://mvnrepository.com/artifact/io.r2dbc/r2dbc-pool
+    implementation 'io.r2dbc:r2dbc-pool'
+
+    // maria db
+    // r2dbc-mariadb : https://mvnrepository.com/artifact/org.mariadb/r2dbc-mariadb
+    implementation 'org.mariadb:r2dbc-mariadb'
+
+    // h2
+    // https://mvnrepository.com/artifact/io.r2dbc/r2dbc-h2
+    //required runtime -> compile for run h2 server in the webflux
+    compileOnly 'io.r2dbc:r2dbc-h2'
+    compileOnly 'com.h2database:h2'
+
+
+    // grpc
+    implementation "net.devh:grpc-server-spring-boot-starter:${rootProject.ext.springBootGrpcVersion}"
+    implementation "io.grpc:grpc-netty:${rootProject.ext.grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${rootProject.ext.grpcVersion}"
+    implementation "io.grpc:grpc-stub:${rootProject.ext.grpcVersion}"
+
+    // okhttp
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.0.0-alpha.2'
+
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+
+}
+
+test {
+    useJUnitPlatform()
+}
