@@ -1,8 +1,8 @@
 package com.mall.userservice.config.database;
 
-import com.mall.userservice.process.entity.UserAuth;
-import com.mall.userservice.process.entity.UserEntity;
-import com.mall.userservice.process.repository.UserRepository;
+import com.mall.userservice.process.user.entity.UserAuth;
+import com.mall.userservice.process.user.entity.UserEntity;
+import com.mall.userservice.process.user.repository.UserRepository;
 import io.r2dbc.spi.ConnectionFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

@@ -15,8 +15,8 @@ dependencies {
     // discovery-service
     implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${rootProject.ext.springCloudEurekaVersion}"
 
-
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // reactor-core : https://mvnrepository.com/artifact/io.projectreactor/reactor-core
     implementation 'io.projectreactor:reactor-core:3.4.8'
@@ -38,6 +38,8 @@ dependencies {
     compileOnly 'io.r2dbc:r2dbc-h2'
     compileOnly 'com.h2database:h2'
 
+    // jwt : https://mvnrepository.com/artifact/com.auth0/java-jwt
+    implementation "com.auth0:java-jwt:${rootProject.ext.jsonWebTokenVersion}"
 
     // grpc
     implementation "net.devh:grpc-server-spring-boot-starter:${rootProject.ext.springBootGrpcVersion}"

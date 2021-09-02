@@ -1,28 +1,31 @@
-package com.mall.gateway.config.security;
+package com.mall.userservice.config.security;
 
 import com.auth0.jwt.algorithms.Algorithm;
-import com.mall.gateway.config.security.prop.JwtProp;
-import com.mall.gateway.process.security.filter.AuthTokenWebFilter;
-import com.mall.gateway.process.security.handler.AuthServerAccessDeniedHandler;
-import com.mall.gateway.process.security.repository.AuthServerSecurityContextRepository;
-import com.mall.gateway.process.security.service.AuthTokenService;
-import com.mall.gateway.process.security.service.impl.AuthTokenServiceImpl;
-import com.mall.gateway.process.security.service.impl.DefaultUserDetailsJwtClaimsConverterImpl;
+import com.mall.userservice.config.security.prop.JwtProp;
+import com.mall.userservice.process.security.filter.AuthTokenWebFilter;
+import com.mall.userservice.process.security.handler.AuthServerAccessDeniedHandler;
+import com.mall.userservice.process.security.repository.AuthServerSecurityContextRepository;
+import com.mall.userservice.process.security.service.AuthTokenService;
+import com.mall.userservice.process.security.service.impl.AuthTokenServiceImpl;
+import com.mall.userservice.process.security.service.impl.DefaultUserDetailsJwtClaimsConverterImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authorization.AuthorizationContext;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @EnableWebFluxSecurity // @EnableWebFluxSecurity는 Spring Security를 활성화
@@ -30,6 +33,8 @@ import java.util.Collections;
 public class SecurityConfig {
 
     private final JwtProp jwtProp;
+
+    private final List<String> WHITE_LIST_IP = List.of("192.168.1.21", "127.0.0.1", "0:0:0:0:0:0:0:1");
 
     private final String[] PUBLIC_ACCESS_PATHS = new String[]{
         "/webjars/springfox-swagger-ui/**",
@@ -41,7 +46,9 @@ public class SecurityConfig {
         "/favicon.ico",
         "/assets/**",
         "/public/**",
-        "/auth/**",
+        "/actuator/**",
+        "/login",
+        "/register",
         "/"
     };
 
@@ -56,6 +63,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 인증
+     * @param passwordEncoder
+     * @return
+     */
     @Bean
     public ReactiveUserDetailsService reactiveUserDetailsService(final PasswordEncoder passwordEncoder) {
         return username -> {
@@ -69,6 +81,9 @@ public class SecurityConfig {
         };
     }
 
+    /**
+     * 권한
+     */
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
         return http
@@ -79,7 +94,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeExchange()
                 .pathMatchers(PUBLIC_ACCESS_PATHS).permitAll()
-                .anyExchange().authenticated()
+                .anyExchange()
+                .access(this::getWhiteListIp)
+                //.authenticated()
                 .and()
                 .addFilterAt(
                         new AuthTokenWebFilter(
@@ -91,6 +108,14 @@ public class SecurityConfig {
                 )
                 .build();
 
+    }
+
+    private Mono<AuthorizationDecision> getWhiteListIp(Mono<Authentication> authentication, AuthorizationContext context) {
+        String ip = context.getExchange().getRequest().getRemoteAddress().getAddress().toString().replace("/", "");
+        return authentication.map((a) -> new AuthorizationDecision(a.isAuthenticated()))
+                .defaultIfEmpty(new AuthorizationDecision(
+                        (WHITE_LIST_IP.contains(ip)) ? true : false
+                ));
     }
 
 }

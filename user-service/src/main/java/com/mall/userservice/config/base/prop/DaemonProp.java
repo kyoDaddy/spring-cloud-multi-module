@@ -27,8 +27,7 @@ public class DaemonProp {
 
     @PostConstruct
     public void showProperties() {
-        log.info("daemon.nick-name => {}", nickName);
-        log.info("daemon.root-uri => {}", rootUri);
+        log.info("daemon.nick-name => {}, daemon.root-uri => {}", nickName, rootUri);
     }
 
 }

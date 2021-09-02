@@ -1,6 +1,7 @@
 spring:
   application:
     name: user-service
+
   config:
     import: classpath:daemon.yml
   profiles:
@@ -45,3 +46,7 @@ logging:
         data:
           r2dbc:
             connectionfactory: DEBUG
+
+jwt:
+  secret-key: kyo
+  expires-minutes: 1440 # 24hr
