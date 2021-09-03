@@ -1,5 +1,6 @@
 package com.mall.userservice.process.user.vo;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

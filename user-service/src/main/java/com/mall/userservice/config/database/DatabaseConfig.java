@@ -40,7 +40,7 @@ public class DatabaseConfig {
                             UserEntity.builder()
                                     .fullName("kyo")
                                     .email("rlarbghrbgh@gmail.com")
-                                    .password("$2a$10$MV7LotQymv.5qlebAHfh9OvuqlwvAgo8DjHpmxUR5ggrYXTIF81R2")
+                                    .password("$2a$10$oHtCLFZn0bjU32GGC5eMSejXD/eF.K7khly5mDob0.LJzMsXExBCO")
                                     .createdAt(LocalDateTime.now())
                                     .userAuth(UserAuth.USER)
                                     .build()

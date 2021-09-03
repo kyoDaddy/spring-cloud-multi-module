@@ -4,13 +4,7 @@ dependencies {
 
 
     // jwt : https://mvnrepository.com/artifact/com.auth0/java-jwt
-    //implementation "com.auth0:java-jwt:${rootProject.ext.jsonWebTokenVersion}"
-
-    // jwt : https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    // jaxb api : https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-    //implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
-
+    implementation "com.auth0:java-jwt:${rootProject.ext.jsonWebTokenVersion}"
 
     compileOnly 'org.projectlombok:lombok'
 

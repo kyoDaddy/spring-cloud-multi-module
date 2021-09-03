@@ -1,7 +1,5 @@
 package com.mall.userservice.process.login.service;
 
-import com.grpc.lib.GetUserByEmailRequest;
-import com.grpc.lib.UserResponse;
 import com.mall.common.utils.ObjectMapperUtils;
 import com.mall.userservice.config.base.prop.DaemonProp;
 import com.mall.userservice.config.exception.UnauthorizedException;
@@ -14,10 +12,7 @@ import com.mall.userservice.process.security.service.impl.DefaultUserDetails;
 import com.mall.userservice.process.user.entity.UserAuth;
 import com.mall.userservice.process.user.entity.UserEntity;
 import com.mall.userservice.process.user.repository.UserRepository;
-import com.mall.userservice.process.user.service.UserService;
 import com.mall.userservice.process.user.vo.RequestUser;
-import com.mall.userservice.process.user.vo.ResponseUser;
-import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +24,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -47,54 +43,39 @@ public class LoginService {
 
     private final UserRepository userRepository;
 
-    public Mono<ResponseLogin> login(RequestLogin login) {
+    public Mono<ResponseLogin> login(RequestLogin requestLogin) {
 
-        return userRepository.findByEmail(login.getEmail())
-                .switchIfEmpty(Mono.defer(() -> Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "미등록 회원입니다.(" + login.getEmail() + ")"))))
-                .filter((user) -> !passwordEncoder.matches(login.getPassword(), user.getPassword()))
-                .flatMap((user) -> getLoginResponseMono(login.getEmail()))
+        return userRepository.findByEmail(requestLogin.getEmail())
+                .log()
+                .switchIfEmpty(Mono.defer(() -> Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "미등록 회원입니다.(" + requestLogin.getEmail() + ")"))))
+                .filter((user) -> passwordEncoder.matches(requestLogin.getPassword(), user.getPassword()))
+                .flatMap((user) -> getLoginResponseMono(requestLogin.getEmail()))
                 .switchIfEmpty(Mono.defer(() -> Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."))));
 
     }
 
-    public Mono<ResponseLogin> register(RequestUser user) {
+    public Mono<ResponseLogin> register(RequestUser requestUser) {
 
-        return userRepository.findByEmail(user.getEmail())
+        return userRepository.findByEmail(requestUser.getEmail())
                 .log()
+                .filter(Objects::nonNull)
+                .map((user) -> {
+                    throw new UnauthorizedException(HttpStatus.UNAUTHORIZED, "이미 등록된 회원입니다.(" + requestUser.getEmail() + ")");
+                })
                 .switchIfEmpty(Mono.defer(() -> {
-                    UserEntity userEntity = ObjectMapperUtils.map(user, UserEntity.class);
+                    UserEntity userEntity = ObjectMapperUtils.map(requestUser, UserEntity.class);
                     userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
                     userEntity.setUserAuth(UserAuth.USER);
                     userEntity.setCreatedAt(LocalDateTime.now());
                     return userRepository.save(userEntity);
                 }))
-                .flatMap((u) -> getLoginResponseMono(user.getEmail()));
-        
-        /*
-        UserEntity userEntity = userRepository.findByEmail(user.getEmail()).block();
-        if (userEntity != null) {
-            throw new UnauthorizedException(HttpStatus.UNAUTHORIZED, "이미 등록된 회원입니다.(" + user.getEmail() + ")");
-        }
-        userEntity = ObjectMapperUtils.map(user, UserEntity.class);
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        userEntity.setUserAuth(UserAuth.USER);
-        userEntity.setCreatedAt(LocalDateTime.now());
-
-        final UserEntity finalUserEntity = userEntity;
-        return userRepository.findByEmail(user.getEmail())
-                .switchIfEmpty(Mono.defer(() -> transactionalService.save(finalUserEntity)))
-                .map((u) -> ObjectMapperUtils.map(u, ResponseUser.class));
-
-         */
+                .flatMap((u) -> getLoginResponseMono(requestUser.getEmail()));
 
     }
-
-
 
     @NotNull
     private Mono<ResponseLogin> getLoginResponseMono(String email) {
         final DefaultUserDetails userDetails = DefaultUserDetails.builder()
-                //.id( UUID.fromString(userResponse.getEmail()) )   //uuid 를 키값으로 사용할때 사용
                 .id(email)
                 .authorities(List.of(UserAuth.USER.toString()))
                 .build();
@@ -108,6 +89,5 @@ public class LoginService {
                         .accessToken(token)
                         .build());
     }
-
 
 }

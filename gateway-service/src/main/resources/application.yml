@@ -57,4 +57,3 @@ spring:
 
 jwt:
   secret-key: kyo
-  expiration-time: 86400000 #1 days
