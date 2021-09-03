@@ -54,13 +54,6 @@ subprojects {
 }
 
 
-project(':gateway') {
-    dependencies {
-        implementation project(':common-entity')
-        implementation project(':grpc-lib')
-    }
-}
-
 project(':user-service') {
     dependencies {
         implementation project(':common-entity')

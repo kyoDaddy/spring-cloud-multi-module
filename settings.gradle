@@ -1,5 +1,4 @@
 rootProject.name = 'mall'
-include 'gateway'
 include 'common-entity'
 include 'grpc-lib'
 include 'user-service'
