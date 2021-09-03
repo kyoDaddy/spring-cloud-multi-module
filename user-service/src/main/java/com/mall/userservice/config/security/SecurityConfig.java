@@ -37,20 +37,16 @@ public class SecurityConfig {
     private final List<String> WHITE_LIST_IP = List.of("192.168.1.21", "127.0.0.1", "0:0:0:0:0:0:0:1");
 
     private final String[] PUBLIC_ACCESS_PATHS = new String[]{
-        "/webjars/springfox-swagger-ui/**",
-        "/swagger-ui/**",
-        "/v3/api-docs",
-        "/v3/api-docs/_",
-        "/swagger-resources",
-        "/swagger-resources/**",
-        "/favicon.ico",
-        "/assets/**",
-        "/public/**",
-        "/actuator/**",
-        "/login",
-        "/register",
-        "/"
+            "/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui.html",
+            "/swagger-ui.html", "/webjars/springfox-swagger-ui/**", "/swagger-ui/**",
+            "/v3/api-docs", "/v3/api-docs/_", "/swagger-resources", "/swagger-resources/**",
+            "/favicon.ico",
+            "/assets/**",
+            "/public/**",
+            "/actuator/**", "/login", "/register",
+            "/"
     };
+
 
     @Bean
     public AuthTokenService authTokenService() {
@@ -86,6 +82,7 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
+
         return http
                 .securityContextRepository(new AuthServerSecurityContextRepository())           // 서버부담 줄이기, cache 서버를 사용을 위함
                 .exceptionHandling().accessDeniedHandler(new AuthServerAccessDeniedHandler())

@@ -7,6 +7,7 @@ buildscript {
         springCloudVersion = '2020.0.3'
         springCloudEurekaVersion = '3.0.3'
         jsonWebTokenVersion = '3.18.1'
+        swaggerVersion = '3.0.0'
     }
     repositories {
         mavenCentral()

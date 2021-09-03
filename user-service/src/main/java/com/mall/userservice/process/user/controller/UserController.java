@@ -3,6 +3,8 @@ package com.mall.userservice.process.user.controller;
 import com.mall.userservice.process.user.service.UserService;
 import com.mall.userservice.process.user.vo.RequestUser;
 import com.mall.userservice.process.user.vo.ResponseUser;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -16,6 +18,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/")
 @RequiredArgsConstructor
 @Slf4j
+@Api(tags = {"회원 관련"})
 public class UserController {
 
     private final Environment env;
@@ -37,34 +40,35 @@ public class UserController {
         return env.getProperty("server.application.name");
     }
 
-    /*@PostMapping("/users")
-    @ResponseStatus(HttpStatus.CREATED)
-    //@ApiOperation(value = "사용자 정보 생성")
-    public Mono<ResponseUser> createUser(@RequestBody final RequestUser user) {
-        return userService.createUser(user);
-    }*/
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "회원 목록", notes = "<big>회원 전체 목록</big>을 반환한다.")
     public Flux<ResponseUser> getUser() {
         return userService.getUserByAll();
     }
 
+
     @GetMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "회원 정보", notes = "회원 한 명에 대한 정보이다.")
     public Mono<ResponseUser> getUser(@PathVariable("userId") Long userId) {
         return userService.getUser(userId);
     }
 
+
     @PutMapping("/users/{userId}")
     @ResponseStatus(code = HttpStatus.OK, reason = "OK")
+    @ApiOperation(value = "회원 정보 수정", notes = "회원 한 명에 대한 수정이다.")
     public Mono<ResponseUser> modifyUser(@RequestBody final RequestUser user, @PathVariable("userId") Long userId) {
         user.setUserId(userId);
         return userService.modifyUser(user);
     }
 
+
     @DeleteMapping("/users/{userId}")
     @ResponseStatus(code = HttpStatus.OK, reason = "OK")
+    @ApiOperation(value = "회원 정보 삭제", notes = "회원 한 명에 대한 삭제이다.")
     public Mono<Void> deleteUser(@PathVariable("userId") Long userId) {
         return userService.deleteUserByUserId(userId);
     }

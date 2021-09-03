@@ -10,7 +10,6 @@ spring:
     group:
       local: daemon-local
       dev: daemon-dev
-
 server:
   tomcat:
     uri-encoding: UTF-8
@@ -50,3 +49,5 @@ logging:
 jwt:
   secret-key: kyo
   expires-minutes: 1440 # 24hr
+
+
