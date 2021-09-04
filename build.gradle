@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.4.5'
+        springBootVersion = '2.5.4'
         protocVersion = '3.13.0'
         grpcVersion = '1.33.1'
         springBootGrpcVersion = '2.12.0.RELEASE'
@@ -8,6 +8,7 @@ buildscript {
         springCloudEurekaVersion = '3.0.3'
         jsonWebTokenVersion = '3.18.1'
         swaggerVersion = '3.0.0'
+        jacksonVersion = '2.12.5'
     }
     repositories {
         mavenCentral()
@@ -55,6 +56,13 @@ subprojects {
 
 
 project(':user-service') {
+    dependencies {
+        implementation project(':common-entity')
+        implementation project(':grpc-lib')
+    }
+}
+
+project(':item-service') {
     dependencies {
         implementation project(':common-entity')
         implementation project(':grpc-lib')

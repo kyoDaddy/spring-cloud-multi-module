@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: item-service
+  banner:
+    charset: UTF-8
+    location: classpath:/banner.txt
+  config:
+    import: classpath:daemon.yml
+  profiles:
+    include:
+      - daemon
+    group:
+      local: daemon-local
+      dev: daemon-dev
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  #random port
+  port: 0
+  shutdown:
+    grace-period: 5000
+
+
+eureka:
+  #Load Balancer
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+
+
+
+

@@ -1,0 +1,10 @@
+
+ ___   _  __   __  _______ 
+|   | | ||  | |  ||       |
+|   |_| ||  |_|  ||   _   |
+|      _||       ||  | |  |
+|     |_ |_     _||  |_|  |
+|    _  |  |   |  |       |
+|___| |_|  |___|  |_______|
+
+${AnsiColor.BRIGHT_GREEN}:: Spring Boot ::${AnsiColor.DEFAULT}${spring-boot.formatted-version}

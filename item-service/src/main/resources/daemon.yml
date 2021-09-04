@@ -1,0 +1,41 @@
+# 스프링 부트 2.4 이전에는 default 영역으로 인식되었지만,
+# 스프링 부트 2.4 부터는 제일 마지막 정의된 내용으로 덮어씌워진다.
+spring:
+  profiles: daemon-local
+
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  datasource:
+    url: 'jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1'
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+daemon:
+  nick-name: Developer local
+  root-uri: "http://127.0.0.1:8080"
+
+---
+spring:
+  profiles: daemon-dev
+
+daemon:
+  nick-name: Developer dev
+  root-uri: "http://172.17.0.2:9090"
+
+
+

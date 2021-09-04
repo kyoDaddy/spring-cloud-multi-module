@@ -54,7 +54,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             if (Objects.isNull(token)) {
                 return onError(exchange, "input invalid token", HttpStatus.UNAUTHORIZED);
             }
-
+            // 유효하지 않으면 true
             if (isJwtValid(token)) {
                 return onError(exchange, "check invalid token", HttpStatus.UNAUTHORIZED);
             }
@@ -98,8 +98,8 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                     .isEmpty();
 
         } catch (JWTVerificationException e) {
-            log.warn("VerifyToken error => ", e);
-            return false;
+            //log.warn("VerifyToken error => ", e);
+            return true;
         }
     }
 
