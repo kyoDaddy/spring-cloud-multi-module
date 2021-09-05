@@ -68,3 +68,10 @@ project(':item-service') {
         implementation project(':grpc-lib')
     }
 }
+
+project(':order-service') {
+    dependencies {
+        implementation project(':common-entity')
+        implementation project(':grpc-lib')
+    }
+}

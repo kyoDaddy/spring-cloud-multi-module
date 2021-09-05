@@ -17,4 +17,8 @@ public class ResponseLogin {
     @JsonProperty("expires_in")
     private Long expiresIn;
 
+    @JsonProperty("user_id")
+    private String userId;
+
+
 }

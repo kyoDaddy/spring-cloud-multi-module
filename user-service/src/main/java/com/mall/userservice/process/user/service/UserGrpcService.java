@@ -9,9 +9,11 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Slf4j
@@ -21,6 +23,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 
     private final TransactionalService transactionalService;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void findById(GetUserByIdRequest request, StreamObserver<UserResponse> responseObserver) {
@@ -46,8 +49,10 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void create(CreateUserRequest request, StreamObserver<UserResponse> responseObserver) {
         // entity mapper 사용
         UserEntity userEntity = ObjectMapperUtils.map(request, UserEntity.class);
+        userEntity.setUserId(UUID.randomUUID().toString());
         userEntity.setUserAuth(UserAuth.USER);
         userEntity.setCreatedAt(LocalDateTime.now());
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
         transactionalService.save(userEntity).map(it -> {
                     if(it == null)  throw new IllegalStateException();

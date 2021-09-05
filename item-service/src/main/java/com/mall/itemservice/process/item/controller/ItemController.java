@@ -58,7 +58,7 @@ public class ItemController {
         Collection<ResponseItem> collections = new ArrayList<>();
         for (ItemEntity itemEntity : itemService.getAllItems()) {
             Link selfLink = linkTo(methodOn(this.getClass()).getItems())
-                    .slash(itemEntity.getId())
+                    .slash(itemEntity.getItemId())
                     .withSelfRel();
 
             ResponseItem item = ObjectMapperUtils.map(itemEntity, ResponseItem.class).add(selfLink);
@@ -73,7 +73,7 @@ public class ItemController {
     @GetMapping(value = "/items/{itemId}", produces = { "application/hal+json" })
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "상품 정보", notes = "상품 한 건에 대한 정보이다.")
-    public EntityModel<ResponseItem> getItem(@PathVariable("itemId") Long itemId) {
+    public EntityModel<ResponseItem> getItem(@PathVariable("itemId") String itemId) {
 
         Optional<ItemEntity> itemEntity = itemService.getItem(itemId);
         if (itemEntity.isEmpty()) {

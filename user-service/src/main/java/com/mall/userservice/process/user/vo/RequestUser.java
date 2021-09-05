@@ -23,6 +23,6 @@ public class RequestUser {
     @Size(min = 2, message = "Name not be less than two characters")
     private String fullName;
 
-    private Long userId;
+    private String userId;
 
 }

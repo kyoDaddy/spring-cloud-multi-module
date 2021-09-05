@@ -22,7 +22,6 @@ public class UserEntity {
     // JPA만 사용할때는 javax.persistence.Id 만 있으면 되지만, reactive에서 Id를 사용하는 annotation은 org.springframework.data.annotation.Id 이라서 같이 선언해야 id를 사용하는게 정상 동작된다.
     @javax.persistence.Id
     @Id @GeneratedValue
-    @Column("user_id")
     private Long id;
 
     private String email;
@@ -34,6 +33,9 @@ public class UserEntity {
 
     @Column("created_at")
     private LocalDateTime createdAt;
+
+    @Column("user_id")
+    private String userId;
 
     @Column("user_auth")
     @Enumerated(EnumType.STRING)

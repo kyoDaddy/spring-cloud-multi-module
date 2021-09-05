@@ -1,5 +1,6 @@
 package com.mall.userservice.process.user.repository;
 
+import com.mall.common.utils.ObjectMapperUtils;
 import com.mall.userservice.process.user.entity.UserEntity;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -13,4 +14,5 @@ public interface UserRepository extends ReactiveCrudRepository<UserEntity, Long>
     @Query("SELECT * FROM user u WHERE u.email = :email")
     Mono<UserEntity> findByEmail(String email);
 
+    Mono<UserEntity> findByUserId(String userId);
 }

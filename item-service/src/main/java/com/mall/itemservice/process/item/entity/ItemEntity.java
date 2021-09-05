@@ -15,11 +15,13 @@ public class ItemEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ITEM_ID")
     private Long id;
 
+    @Column(nullable = false, name = "ITEM_ID")
+    private String itemId;
+
     @Column(nullable = false, name = "ITEM_NAME")
-    private String name;
+    private String itemName;
 
     private int stockQuantity;
     private int unitPrice;

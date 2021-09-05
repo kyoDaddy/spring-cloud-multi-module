@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -49,7 +50,8 @@ public class LoginService {
                 .log()
                 .switchIfEmpty(Mono.defer(() -> Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "미등록 회원입니다.(" + requestLogin.getEmail() + ")"))))
                 .filter((user) -> passwordEncoder.matches(requestLogin.getPassword(), user.getPassword()))
-                .flatMap((user) -> getLoginResponseMono(requestLogin.getEmail()))
+                //.flatMap((user) -> getLoginResponseMono(requestLogin.getEmail()))
+                .flatMap((user) -> getLoginResponseMono(user.getUserId()))
                 .switchIfEmpty(Mono.defer(() -> Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."))));
 
     }
@@ -64,19 +66,21 @@ public class LoginService {
                 })
                 .switchIfEmpty(Mono.defer(() -> {
                     UserEntity userEntity = ObjectMapperUtils.map(requestUser, UserEntity.class);
+                    userEntity.setUserId(UUID.randomUUID().toString());
                     userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
                     userEntity.setUserAuth(UserAuth.USER);
                     userEntity.setCreatedAt(LocalDateTime.now());
                     return userRepository.save(userEntity);
                 }))
-                .flatMap((u) -> getLoginResponseMono(requestUser.getEmail()));
+                //.flatMap((u) -> getLoginResponseMono(requestUser.getEmail()));
+                .flatMap(o -> getLoginResponseMono(((UserEntity) o).getUserId()));
 
     }
 
     @NotNull
-    private Mono<ResponseLogin> getLoginResponseMono(String email) {
+    private Mono<ResponseLogin> getLoginResponseMono(String userId) {
         final DefaultUserDetails userDetails = DefaultUserDetails.builder()
-                .id(email)
+                .id(userId)
                 .authorities(List.of(UserAuth.USER.toString()))
                 .build();
 
@@ -84,6 +88,7 @@ public class LoginService {
 
         return authTokenService.sign(claims).log()
                 .map(token -> ResponseLogin.builder()
+                        .userId(userId)
                         .expiresIn(jwtProp.getExpiresMinutes() * 60L)
                         .tokenType("bearer")
                         .accessToken(token)

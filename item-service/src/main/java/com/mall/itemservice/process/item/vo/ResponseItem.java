@@ -14,8 +14,8 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseItem extends RepresentationModel<ResponseItem> {
 
-    private String id;
-    private String name;
+    private String itemId;
+    private String itemName;
 
     private int stockQuantity;
     private int unitPrice;
