@@ -8,8 +8,9 @@ spring:
     include:
       - daemon
     group:
-      local: daemon-local
-      dev: daemon-dev
+      local: local
+      dev: dev
+
 server:
   tomcat:
     uri-encoding: UTF-8
@@ -46,8 +47,13 @@ logging:
           r2dbc:
             connectionfactory: DEBUG
 
-jwt:
-  secret-key: kyo
-  expires-minutes: 1440 # 24hr
+#jwt:
+#  secret-key: kyo
+#  expires-minutes: 1440 # 24hr
 
-
+# apply actuator refresh, health, beans, httptrace, busrefresh
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans,httptrace,busrefresh

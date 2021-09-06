@@ -24,14 +24,6 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user-service/actuator/**
-            - Method=GET,POST
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
             - Path=/user-service/login
             - Method=POST
           filters:
@@ -73,5 +65,12 @@ spring:
             - RewritePath=/order-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
 
-jwt:
-  secret-key: kyo
+#jwt:
+#  secret-key: kyo
+
+# apply actuator refresh, health, beans, httptrace, busrefresh
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans,httptrace,busrefresh

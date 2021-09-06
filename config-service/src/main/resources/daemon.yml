@@ -5,27 +5,11 @@ spring:
     activate:
       on-profile: local
 
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
-
-  jpa:
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-
-  datasource:
-    url: 'jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1'
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:///${user.home}/IdeaProjects/spring-cloud-repo/navtive-file-repo-spring-cloud/mall
 
 daemon:
   nick-name: Developer Item local
@@ -36,6 +20,15 @@ spring:
   config:
     activate:
       on-profile: dev
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/kyoDaddy/repo-spring-cloud-mall.git
+          username: kyoDaddy
+          password: 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
+          default-label: main
 
 daemon:
   nick-name: Developer Item dev

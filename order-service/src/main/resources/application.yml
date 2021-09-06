@@ -10,8 +10,8 @@ spring:
     include:
       - daemon
     group:
-      local: daemon-local
-      dev: daemon-dev
+      local: local
+      dev: dev
 
 server:
   tomcat:

@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      uri: http://127.0.0.1:8888
+      # config-service -> call user-service.yml
+      name: user-service
+

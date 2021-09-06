@@ -1,0 +1,28 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-service
+  # apply spring-bus with rabbitmq
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+
+  config:
+    import: classpath:daemon.yml
+  profiles:
+    include:
+      - daemon
+    group:
+      native: local
+      dev: dev
+
+# apply actuator health,busrefresh
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,busrefresh

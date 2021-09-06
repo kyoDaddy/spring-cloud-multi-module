@@ -1,45 +1,19 @@
 # 스프링 부트 2.4 이전에는 default 영역으로 인식되었지만,
 # 스프링 부트 2.4 부터는 제일 마지막 정의된 내용으로 덮어씌워진다.
 spring:
-  profiles: daemon-local
-
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
-
-  r2dbc:
-    #use schema.sql
-    initialization-mode: always
-    #maria db
-    #url: r2dbc:mariadb://127.0.0.1:49168/user
-    #username: mall
-    #password: test!1234
-
-    #h2
-    url: r2dbc:h2:mem:///testdb?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password:
-
-    # config from https://github.com/r2dbc/r2dbc-pool
-    pool:
-      initialSize: 10
-      maxSize: 100
-      #30 minutes
-      maxIdleTime: PT30M
-      validationQuery: SELECT 1
-
+  config:
+    activate:
+      on-profile: local
 
 daemon:
   nick-name: Developer User local
   root-uri: "http://127.0.0.1:8080"
 
-
 ---
 spring:
-  profiles: daemon-dev
+  config:
+    activate:
+      on-profile: dev
   r2dbc:
     url: r2dbc:mariadb://172.17.0.2:49168/user
     username: mall
