@@ -1,6 +1,7 @@
 # mall
 
-![kyo-mall-architecture drawio](https://user-images.githubusercontent.com/25473606/132948394-0fd92db8-753d-4b08-9b02-328912ec9ee3.png)
+![kyo-mall-architecture drawio](https://user-images.githubusercontent.com/25473606/132948709-6a268672-2afd-431c-aa59-dc6405731401.png)
+
 
 
 [목표 : 쇼핑몰 구현]
