@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-09-11T13:00:56.970Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36" etag="pSxUgZWvqgQFBBhUtJv-" version="15.1.4" type="github">
+<mxfile host="app.diagrams.net" modified="2021-09-11T13:01:02.794Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36" etag="8x0vtwJAeO4HgA7ZCHyI" version="15.1.4" type="github">
   <diagram name="Page-1" id="e3a06f82-3646-2815-327d-82caf3d4e204">
     <mxGraphModel dx="1422" dy="1944" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="1169" pageHeight="826" background="#283618" math="0" shadow="0">
       <root>
@@ -114,7 +114,7 @@
           <mxGeometry x="1312" y="-279.9999999999999" width="71" height="97.5" as="geometry" />
         </mxCell>
         <mxCell id="ctaD90ZbitiZ5sScprYx-19" value="Outside Networks" style="whiteSpace=wrap;html=1;fillColor=#BC6C25;fontSize=15;strokeColor=none;verticalAlign=bottom;sketch=1;rounded=1;labelPosition=left;verticalLabelPosition=top;align=right;fontStyle=1;fontColor=#FEFAE0;" parent="1" vertex="1">
-          <mxGeometry x="709.5" y="-530" width="360" height="380" as="geometry" />
+          <mxGeometry x="709.5" y="-520" width="360" height="370" as="geometry" />
         </mxCell>
         <mxCell id="ctaD90ZbitiZ5sScprYx-20" style="edgeStyle=none;html=1;startSize=10;endSize=10;jettySize=auto;orthogonalLoop=1;fontSize=14;endArrow=none;endFill=0;strokeWidth=2;sketch=1;curved=1;labelBackgroundColor=#283618;strokeColor=#DDA15E;fontColor=#FEFAE0;" parent="1" source="ctaD90ZbitiZ5sScprYx-26" target="ctaD90ZbitiZ5sScprYx-29" edge="1">
           <mxGeometry relative="1" as="geometry">
