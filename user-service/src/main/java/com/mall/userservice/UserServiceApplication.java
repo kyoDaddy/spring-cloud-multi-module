@@ -1,26 +1,46 @@
 package com.mall.userservice;
 
+import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
 
-/**
- * R2DBC 를 사용해서 API 에 대한 요청은 처리할 수 있지만, JPA 의 기능은 지원하지 않는다.
- * 아니면 JPA Repository Wrapping 하는 구조의 형태로 구현할 수 있다.
- * 이에 대한 예제는 ReactiveCrudRepositoryAdapter.java 이와 같다.
- * 상용환경에서 간단한 단일 Entity 를 조작하는 용도로 사용하겠는데, 그 이상의 용도로는 손이 많이갈 것으로 예상된다.
- * webflux 를 사용했을 때 효과가 좋은 상황은 API 에 대한 트래픽이 많은 경우일텐데 트래픽이 적은 상황에서는 굳이 reactive 하게 개발할 필요가 없지 않나라는 생각이 들었다.
- *
- */
 @SpringBootApplication
 @EnableEurekaClient
+@EnableFeignClients(basePackages = {"com.mall.userservice.process.user.client"}) // feign client 사용 명시 (@FeignCluent를 찾아 구현체를 만들어 줌)
 public class UserServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);
     }
+
+
+    @Bean
+    // order-service-url : http://ORDER-SERVICE/order-service/%s/orders (ip, domain 대신 microservice name 사용 가능)
+    @LoadBalanced
+    public RestTemplate getRestTemplate() {
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setConnectTimeout(10*1000); // 10초
+        factory.setReadTimeout(10*1000); // 10초
+
+        RestTemplate restTemplate = new RestTemplate(factory);
+        return restTemplate;
+    }
+
+    /**
+     * feign-client logging
+     */
+    @Bean
+    public Logger.Level feignLoggerLevel() {
+        return Logger.Level.FULL;
+    }
+
 
 
 }

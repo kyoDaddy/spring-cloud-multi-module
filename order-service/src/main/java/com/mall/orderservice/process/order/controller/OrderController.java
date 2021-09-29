@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -91,9 +92,23 @@ public class OrderController {
             collections.add(item);
         }
 
+        log.info("=========> input");
+
         CollectionModel<ResponseOrder> model = CollectionModel.of(collections);
         model.add(linkTo(methodOn(this.getClass()).getOrder(userId)).withSelfRel());
         return model;
+    }
+
+    // 사용자별 주문 이력
+    @GetMapping(value = "/{userId}/orders2", produces = { "application/json" })
+    public List<ResponseOrder> getOrders(@PathVariable("userId") String userId) {
+        List<ResponseOrder> list = new ArrayList<>();
+        Iterable<OrderEntity> orderLists = orderService.getOrdersByUserId(userId);
+        for (OrderEntity orderEntity : orderLists) {
+            list.add(ObjectMapperUtils.map(orderEntity, ResponseOrder.class));
+        }
+        log.info("=========> input");
+        return list;
     }
 
 

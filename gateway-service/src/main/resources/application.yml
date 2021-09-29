@@ -54,7 +54,6 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/item-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:

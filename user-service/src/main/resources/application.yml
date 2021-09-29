@@ -37,6 +37,13 @@ eureka:
 
 logging:
   level:
+    com.mall.userservice: DEBUG
+    com:
+      mall:
+        userservice:
+          process:
+            user:
+              client: DEBUG
     io:
       r2dbc:
         pool: DEBUG
@@ -57,3 +64,4 @@ management:
     web:
       exposure:
         include: refresh,health,beans,httptrace,busrefresh
+

@@ -53,7 +53,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "회원 정보", notes = "회원 한 명에 대한 정보이다.")
     public Mono<ResponseUser> getUser(@PathVariable("userId") String userId) {
-        return userService.getUser(userId);
+        return userService.getUserByUserId(userId);
     }
 
 
