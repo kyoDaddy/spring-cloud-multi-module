@@ -37,6 +37,6 @@
    - aws-lightsail 사용하여 인스턴스 구성 후 빌드/배포 적용까지 해보고 싶음.
 
 6. 기타
-   - sourcetree 에서 git kraken gui tool 사용으로 변경
+   - sourcetree 에서 git kraken gui tool 사용으로 변경test
 
 
