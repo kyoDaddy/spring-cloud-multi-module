@@ -5,13 +5,48 @@ spring:
     charset: UTF-8
     location: classpath:/banner.txt
   config:
-    import: classpath:daemon.yml
-  profiles:
-    include:
-      - daemon
-    group:
-      local: local
-      dev: dev
+    activate:
+      on-profile: local
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+  # apply spring-bus with rabbitmq
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+  # setting local embedded-redis
+  redis:
+    host: localhost
+    port: 6471
+    timeout: 5000
+  # setting local embedded-h2
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+
+  datasource:
+    url: jdbc:h2:mem:orderdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    open-in-view: false
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
 
 server:
   tomcat:
@@ -32,6 +67,17 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 
+
+# apply actuator refresh, health, beans, httptrace, busrefresh
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans,httptrace,busrefresh
+
+daemon:
+  nick-name: kyo local
+  root-uri: "http://127.0.0.1:8080"
 
 
 

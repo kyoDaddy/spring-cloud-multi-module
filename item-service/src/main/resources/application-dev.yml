@@ -1,0 +1,92 @@
+spring:
+  application:
+    name: item-service
+  banner:
+    charset: UTF-8
+    location: classpath:/banner.txt
+  config:
+    activate:
+      on-profile: dev
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+  # apply spring-bus with rabbitmq
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+  # setting dev redis
+  redis:
+    host: localhost
+    port: 6480
+    timeout: 5000
+  # setting dev db
+  datasource:
+    username: uu
+    password: pp
+    sample-write:
+      url: jdbc:mysql://hostname-write:port/dbname?autoReconnect=true&useSSL=false&initialTimeout=3&maxReconnects=5&useUnicode=true&serverTimezone=UTC&rewriteBatchedStatements=true&noAccessToProcedureBodies=true
+      driverClassName: com.mysql.cj.jdbc.Driver
+      minimumIdle: 4
+      maximumPoolSize: 4
+      idleTimeout: 50000
+      maxLifetime: 60000
+    sample-read:
+      url: jdbc:mysql://hostname-read:port/dbname?autoReconnect=true&useSSL=false&initialTimeout=3&maxReconnects=5&useUnicode=true&serverTimezone=UTC&rewriteBatchedStatements=true&noAccessToProcedureBodies=true
+      driverClassName: com.mysql.cj.jdbc.Driver
+      minimumIdle: 4
+      maximumPoolSize: 4
+      idleTimeout: 50000
+      maxLifetime: 60000
+
+    jpa:
+      open-in-view: false
+      show-sql: true
+      hibernate:
+        ddl-auto: none
+      properties:
+        hibernate:
+          dialect: "org.hibernate.dialect.MySQL5InnoDBDialect"
+          current_session_context_class: "org.springframework.orm.hibernate5.SpringSessionContext"
+          format_sql: true
+          jdbc:
+            batch_size: 10001
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  #random port
+  port: 0
+  shutdown:
+    grace-period: 5000
+
+
+eureka:
+  #Load Balancer
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+
+# apply actuator refresh, health, beans, httptrace, busrefresh
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans,httptrace,busrefresh
+
+daemon:
+  nick-name: kyo dev
+  root-uri: "http://127.0.0.1:8080"
+
+
+
+

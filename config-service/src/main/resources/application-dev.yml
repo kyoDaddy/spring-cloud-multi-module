@@ -9,7 +9,7 @@ spring:
     location: classpath:/banner.txt
   config:
     activate:
-      on-profile: native
+      on-profile: dev
   # apply spring-bus with rabbitmq
   rabbitmq:
     host: 127.0.0.1
@@ -20,9 +20,11 @@ spring:
   cloud:
     config:
       server:
-        native:
-          search-locations: file:///D:/dev-source/java/etc/spring-cloud-repo/navtive-file-repository/spring-cloud-multi-module
-
+        git:
+          uri: https://github.com/kyoDaddy/repo-spring-cloud-mall.git
+          username: kyoDaddy
+          password: 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
+          default-label: main
 
 # apply actuator health,busrefresh
 management:

@@ -1,9 +1,9 @@
 package com.mall.userservice.process.login.service;
 
 import com.mall.common.utils.ObjectMapperUtils;
-import com.mall.userservice.config.base.prop.DaemonProp;
+import com.mall.userservice.config.base.prop.DaemonProperties;
 import com.mall.userservice.config.exception.UnauthorizedException;
-import com.mall.userservice.config.security.prop.JwtProp;
+import com.mall.userservice.config.security.prop.JwtProperties;
 import com.mall.userservice.process.login.vo.RequestLogin;
 import com.mall.userservice.process.login.vo.ResponseLogin;
 import com.mall.userservice.process.security.service.AuthTokenService;
@@ -15,7 +15,6 @@ import com.mall.userservice.process.user.repository.UserRepository;
 import com.mall.userservice.process.user.vo.RequestUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final JwtProp jwtProp;
+    private final JwtProperties jwtProperties;
 
     private final AuthTokenService authTokenService;
 
@@ -40,7 +39,7 @@ public class LoginService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final DaemonProp daemonProp;
+    private final DaemonProperties daemonProperties;
 
     private final UserRepository userRepository;
 
@@ -77,7 +76,6 @@ public class LoginService {
 
     }
 
-    @NotNull
     private Mono<ResponseLogin> getLoginResponseMono(String userId) {
         final DefaultUserDetails userDetails = DefaultUserDetails.builder()
                 .id(userId)
@@ -89,7 +87,7 @@ public class LoginService {
         return authTokenService.sign(claims).log()
                 .map(token -> ResponseLogin.builder()
                         .userId(userId)
-                        .expiresIn(jwtProp.getExpiresMinutes() * 60L)
+                        .expiresIn(jwtProperties.getExpiresMinutes() * 60L)
                         .tokenType("bearer")
                         .accessToken(token)
                         .build());

@@ -13,7 +13,7 @@ spring:
     name: gateway-service
   config:
     activate:
-      on-profile: local
+      on-profile: dev
   cloud:
     gateway:
       default-filters:

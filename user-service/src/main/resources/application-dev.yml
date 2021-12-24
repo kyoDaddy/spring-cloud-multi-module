@@ -1,12 +1,9 @@
 spring:
   application:
-    name: item-service
-  banner:
-    charset: UTF-8
-    location: classpath:/banner.txt
+    name: user-service
   config:
     activate:
-      on-profile: local
+      on-profile: dev
   zipkin:
     base-url: http://127.0.0.1:9411
     enabled: true
@@ -19,35 +16,24 @@ spring:
     port: 5672
     username: admin
     password: admin
-  # setting local embedded-redis
+  # setting dev redis
   redis:
     host: localhost
-    port: 6473
+    port: 6379
     timeout: 5000
-  # setting local embedded-h2
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
+  # setting dev db
+  r2dbc:
+    url: r2dbc:mariadb://127.0.0.1:3306/userdb
+    username: admin
+    password: test!1234
+    # config from https://github.com/r2dbc/r2dbc-pool
+    pool:
+      initialSize: 10
+      maxSize: 100
+      #30 minutes
+      maxIdleTime: PT30M
+      validationQuery: SELECT 1
 
-  datasource:
-    url: jdbc:h2:mem:itemdb;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
-  jpa:
-    defer-datasource-initialization: true
-    open-in-view: false
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
 
 server:
   tomcat:
@@ -57,6 +43,10 @@ server:
   shutdown:
     grace-period: 5000
 
+grpc:
+  server:
+    port: 9898
+  shutdownGrace: 30
 
 eureka:
   #Load Balancer
@@ -69,6 +59,31 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka
 
 
+logging:
+  level:
+    com.mall.userservice: INFO
+    com:
+      mall:
+        userservice:
+          process:
+            user:
+              client: INFO
+    io:
+      r2dbc:
+        pool: INFO
+    org:
+      springframework:
+        r2dbc: INFO
+        data:
+          r2dbc:
+            connectionfactory: INFO
+  file:
+    path: D:/logs/
+
+jwt:
+  secret-key: testkyo
+  expires-minutes: 1440 # 24hr
+
 # apply actuator refresh, health, beans, httptrace, busrefresh
 management:
   endpoints:
@@ -77,9 +92,4 @@ management:
         include: refresh,health,beans,httptrace,busrefresh
 
 daemon:
-  nick-name: kyo local
-  root-uri: "http://127.0.0.1:8080"
-
-
-
-
+  nick-name: kyo dev

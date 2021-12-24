@@ -1,4 +1,4 @@
-rootProject.name = 'mall'
+rootProject.name = 'spring-cloud-multi-module'
 include 'common-entity'
 include 'grpc-lib'
 include 'discovery-service'

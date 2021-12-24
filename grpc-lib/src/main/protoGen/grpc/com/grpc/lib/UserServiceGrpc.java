@@ -89,6 +89,99 @@ public final class UserServiceGrpc {
     return getFindByEmailMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.grpc.lib.CreateUserRequest,
+      com.grpc.lib.UserResponse> getCreateMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "create",
+      requestType = com.grpc.lib.CreateUserRequest.class,
+      responseType = com.grpc.lib.UserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.grpc.lib.CreateUserRequest,
+      com.grpc.lib.UserResponse> getCreateMethod() {
+    io.grpc.MethodDescriptor<com.grpc.lib.CreateUserRequest, com.grpc.lib.UserResponse> getCreateMethod;
+    if ((getCreateMethod = UserServiceGrpc.getCreateMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getCreateMethod = UserServiceGrpc.getCreateMethod) == null) {
+          UserServiceGrpc.getCreateMethod = getCreateMethod =
+              io.grpc.MethodDescriptor.<com.grpc.lib.CreateUserRequest, com.grpc.lib.UserResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "create"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.lib.CreateUserRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.lib.UserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("create"))
+              .build();
+        }
+      }
+    }
+    return getCreateMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.grpc.lib.UpdateUserRequest,
+      com.grpc.lib.UserResponse> getUpdateMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "update",
+      requestType = com.grpc.lib.UpdateUserRequest.class,
+      responseType = com.grpc.lib.UserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.grpc.lib.UpdateUserRequest,
+      com.grpc.lib.UserResponse> getUpdateMethod() {
+    io.grpc.MethodDescriptor<com.grpc.lib.UpdateUserRequest, com.grpc.lib.UserResponse> getUpdateMethod;
+    if ((getUpdateMethod = UserServiceGrpc.getUpdateMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getUpdateMethod = UserServiceGrpc.getUpdateMethod) == null) {
+          UserServiceGrpc.getUpdateMethod = getUpdateMethod =
+              io.grpc.MethodDescriptor.<com.grpc.lib.UpdateUserRequest, com.grpc.lib.UserResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "update"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.lib.UpdateUserRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.lib.UserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("update"))
+              .build();
+        }
+      }
+    }
+    return getUpdateMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.grpc.lib.DeleteUserRequest,
+      com.grpc.lib.UserResponse> getDeleteByIdMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "deleteById",
+      requestType = com.grpc.lib.DeleteUserRequest.class,
+      responseType = com.grpc.lib.UserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.grpc.lib.DeleteUserRequest,
+      com.grpc.lib.UserResponse> getDeleteByIdMethod() {
+    io.grpc.MethodDescriptor<com.grpc.lib.DeleteUserRequest, com.grpc.lib.UserResponse> getDeleteByIdMethod;
+    if ((getDeleteByIdMethod = UserServiceGrpc.getDeleteByIdMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getDeleteByIdMethod = UserServiceGrpc.getDeleteByIdMethod) == null) {
+          UserServiceGrpc.getDeleteByIdMethod = getDeleteByIdMethod =
+              io.grpc.MethodDescriptor.<com.grpc.lib.DeleteUserRequest, com.grpc.lib.UserResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "deleteById"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.lib.DeleteUserRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.lib.UserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("deleteById"))
+              .build();
+        }
+      }
+    }
+    return getDeleteByIdMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -151,6 +244,27 @@ public final class UserServiceGrpc {
       asyncUnimplementedUnaryCall(getFindByEmailMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void create(com.grpc.lib.CreateUserRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getCreateMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void update(com.grpc.lib.UpdateUserRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getUpdateMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void deleteById(com.grpc.lib.DeleteUserRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getDeleteByIdMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -167,6 +281,27 @@ public final class UserServiceGrpc {
                 com.grpc.lib.GetUserByEmailRequest,
                 com.grpc.lib.UserResponse>(
                   this, METHODID_FIND_BY_EMAIL)))
+          .addMethod(
+            getCreateMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.grpc.lib.CreateUserRequest,
+                com.grpc.lib.UserResponse>(
+                  this, METHODID_CREATE)))
+          .addMethod(
+            getUpdateMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.grpc.lib.UpdateUserRequest,
+                com.grpc.lib.UserResponse>(
+                  this, METHODID_UPDATE)))
+          .addMethod(
+            getDeleteByIdMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.grpc.lib.DeleteUserRequest,
+                com.grpc.lib.UserResponse>(
+                  this, METHODID_DELETE_BY_ID)))
           .build();
     }
   }
@@ -200,6 +335,30 @@ public final class UserServiceGrpc {
       asyncUnaryCall(
           getChannel().newCall(getFindByEmailMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void create(com.grpc.lib.CreateUserRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getCreateMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void update(com.grpc.lib.UpdateUserRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getUpdateMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void deleteById(com.grpc.lib.DeleteUserRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getDeleteByIdMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -228,6 +387,27 @@ public final class UserServiceGrpc {
     public com.grpc.lib.UserResponse findByEmail(com.grpc.lib.GetUserByEmailRequest request) {
       return blockingUnaryCall(
           getChannel(), getFindByEmailMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.grpc.lib.UserResponse create(com.grpc.lib.CreateUserRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getCreateMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.grpc.lib.UserResponse update(com.grpc.lib.UpdateUserRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getUpdateMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.grpc.lib.UserResponse deleteById(com.grpc.lib.DeleteUserRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getDeleteByIdMethod(), getCallOptions(), request);
     }
   }
 
@@ -260,10 +440,37 @@ public final class UserServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getFindByEmailMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.grpc.lib.UserResponse> create(
+        com.grpc.lib.CreateUserRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getCreateMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.grpc.lib.UserResponse> update(
+        com.grpc.lib.UpdateUserRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getUpdateMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.grpc.lib.UserResponse> deleteById(
+        com.grpc.lib.DeleteUserRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getDeleteByIdMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_FIND_BY_ID = 0;
   private static final int METHODID_FIND_BY_EMAIL = 1;
+  private static final int METHODID_CREATE = 2;
+  private static final int METHODID_UPDATE = 3;
+  private static final int METHODID_DELETE_BY_ID = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -288,6 +495,18 @@ public final class UserServiceGrpc {
           break;
         case METHODID_FIND_BY_EMAIL:
           serviceImpl.findByEmail((com.grpc.lib.GetUserByEmailRequest) request,
+              (io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse>) responseObserver);
+          break;
+        case METHODID_CREATE:
+          serviceImpl.create((com.grpc.lib.CreateUserRequest) request,
+              (io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse>) responseObserver);
+          break;
+        case METHODID_UPDATE:
+          serviceImpl.update((com.grpc.lib.UpdateUserRequest) request,
+              (io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse>) responseObserver);
+          break;
+        case METHODID_DELETE_BY_ID:
+          serviceImpl.deleteById((com.grpc.lib.DeleteUserRequest) request,
               (io.grpc.stub.StreamObserver<com.grpc.lib.UserResponse>) responseObserver);
           break;
         default:
@@ -353,6 +572,9 @@ public final class UserServiceGrpc {
               .setSchemaDescriptor(new UserServiceFileDescriptorSupplier())
               .addMethod(getFindByIdMethod())
               .addMethod(getFindByEmailMethod())
+              .addMethod(getCreateMethod())
+              .addMethod(getUpdateMethod())
+              .addMethod(getDeleteByIdMethod())
               .build();
         }
       }

@@ -8,27 +8,38 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+    // discovery-service
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${rootProject.ext.springCloudEurekaVersion}"
+
     // config-service
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
 
-    // discovery-service
-    implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${rootProject.ext.springCloudEurekaVersion}"
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // embedded-redis
+    implementation group: 'it.ozimov', name: 'embedded-redis', version: "${rootProject.ext.embeddedRedisVersion}"
+
+    // circuitbreaker-resilience4j
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+    // sleuth
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    // zipkin
+    implementation "org.springframework.cloud:spring-cloud-starter-zipkin:${rootProject.ext.zipkinVersion}"
+    // micorometer
+    implementation "io.micrometer:micrometer-registry-prometheus:${rootProject.ext.micrometerVersion}"
+
 
     // reactor-core : https://mvnrepository.com/artifact/io.projectreactor/reactor-core
     implementation 'io.projectreactor:reactor-core:3.4.8'
 
-    // okhttp
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.0.0-alpha.2'
+    // guava : https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: "${rootProject.ext.guavaVersion}"
+    implementation "com.googlecode.json-simple:json-simple:${rootProject.ext.jsonSimpleVersion}"
 
-    // guava & gson : https://mvnrepository.com/artifact/com.google.guava/guava
-    implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
-    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-    implementation 'com.google.code.gson:gson:2.8.7'
-
-    /* swagger */
+    // swagger
     implementation "io.springfox:springfox-boot-starter:${rootProject.ext.swaggerVersion}"
     implementation "io.springfox:springfox-swagger-ui:${rootProject.ext.swaggerVersion}"
     implementation "io.springfox:springfox-spring-webflux:${rootProject.ext.swaggerVersion}"
@@ -49,8 +60,8 @@ dependencies {
 
     // h2
     compileOnly 'com.h2database:h2'
+    testImplementation 'com.h2database:h2' // 테스트 의존성 추가
 
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

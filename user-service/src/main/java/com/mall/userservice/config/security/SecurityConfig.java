@@ -1,7 +1,7 @@
 package com.mall.userservice.config.security;
 
 import com.auth0.jwt.algorithms.Algorithm;
-import com.mall.userservice.config.security.prop.JwtProp;
+import com.mall.userservice.config.security.prop.JwtProperties;
 import com.mall.userservice.process.security.filter.AuthTokenWebFilter;
 import com.mall.userservice.process.security.handler.AuthServerAccessDeniedHandler;
 import com.mall.userservice.process.security.repository.AuthServerSecurityContextRepository;
@@ -32,7 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtProp jwtProp;
+    private final JwtProperties jwtProperties;
 
     private final List<String> WHITE_LIST_IP = List.of("192.168.1.21", "127.0.0.1", "0:0:0:0:0:0:0:1");
 
@@ -50,8 +50,8 @@ public class SecurityConfig {
 
     @Bean
     public AuthTokenService authTokenService() {
-        final Algorithm algorithm = Algorithm.HMAC256(jwtProp.getSecretKey());
-        return new AuthTokenServiceImpl(algorithm, jwtProp.getExpiresMinutes());
+        final Algorithm algorithm = Algorithm.HMAC256(jwtProperties.getSecretKey());
+        return new AuthTokenServiceImpl(algorithm, jwtProperties.getExpiresMinutes());
     }
 
     @Bean

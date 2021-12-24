@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.17'
+        classpath "com.google.protobuf:protobuf-gradle-plugin:${rootProject.ext.protobufGradlePluginVersion}"
     }
 }
 
@@ -44,6 +44,7 @@ test {
     useJUnitPlatform()
 }
 
+// start grpc proto gen (https://github.com/google/protobuf-gradle-plugin)
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:${rootProject.ext.protocVersion}"
@@ -73,6 +74,7 @@ task syncProtoGen(type: Sync) {
     from "$buildDir/generated/source/proto/main"
     into "$projectDir/src/main/protoGen"
 }
+// end grpc proto gen
 
 /* 변경시 jar 빌드 필요 - 자동으로 jar 생성되게 만들어야할 필요 있음 */
 jar {

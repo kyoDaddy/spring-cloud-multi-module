@@ -1,14 +1,38 @@
 buildscript {
     ext {
-        springBootVersion = '2.5.4'
+        springBootVersion = '2.5.7'
+
         protocVersion = '3.13.0'
+        protobufGradlePluginVersion = '0.8.18'
+
         grpcVersion = '1.33.1'
         springBootGrpcVersion = '2.12.0.RELEASE'
+
+        embeddedRedisVersion = '0.7.2'
+
+        gsonVersion = '2.8.9'
+        guavaVersion = '30.1.1-jre'
+        jsonSimpleVersion = '1.1.1'
+
+        jacksonVersion = '2.12.5'
+
+        mapstructVersion = '1.4.2.Final'
+        mapstructBindingVersion = '0.2.0'
+
+        lombokVersion = '1.18.20'
+
         springCloudVersion = '2020.0.3'
         springCloudEurekaVersion = '3.0.3'
+
         jsonWebTokenVersion = '3.18.1'
+
         swaggerVersion = '3.0.0'
-        jacksonVersion = '2.12.5'
+
+        zipkinVersion = '2.2.8.RELEASE'
+        micrometerVersion = '1.7.7'
+
+        reactorCoreVersion = '3.4.8'
+
     }
     repositories {
         mavenCentral()
@@ -26,30 +50,37 @@ repositories {
 subprojects {
 
     apply plugin: 'java'
+    apply plugin: 'eclipse'
     apply plugin: 'idea'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
     group = 'com.mall'
-    version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = 11
+    version = '1.0.0'
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
 
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        /* lombok */
+        // lombok
         implementation 'org.projectlombok:lombok'
+        testImplementation 'org.projectlombok:lombok' // 테스트 의존성 추가
+        testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
+
+        // gson
+        implementation "com.google.code.gson:gson:${gsonVersion}"
+
+        // mapstruct
+        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+        annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${mapstructBindingVersion}"
+
         /* modelMapper : https://mvnrepository.com/artifact/org.modelmapper/modelmapper */
         implementation 'org.modelmapper:modelmapper:2.4.4'
-        // ..모듈들이 공통적으로 사용
-    }
-
-    task hello {
-        doLast {
-            task -> println "I'm $task.project.name"
-        }
     }
 
 }

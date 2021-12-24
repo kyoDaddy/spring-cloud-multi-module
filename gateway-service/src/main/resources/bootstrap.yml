@@ -5,5 +5,5 @@ spring:
       # config-service -> call gateway-service.yml
       name: gateway-service
 
-#  profiles:
-#    active: dev
+  profiles:
+    active: local

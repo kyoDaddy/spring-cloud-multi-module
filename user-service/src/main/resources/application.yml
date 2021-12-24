@@ -1,15 +1,26 @@
 spring:
   application:
     name: user-service
-
   config:
-    import: classpath:daemon.yml
-  profiles:
-    include:
-      - daemon
-    group:
-      local: local
-      dev: dev
+    activate:
+      on-profile: local
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+  # apply spring-bus with rabbitmq
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+  # setting local embedded-redis
+  redis:
+    host: localhost
+    port: 6470
+    timeout: 5000
 
 server:
   tomcat:
@@ -53,10 +64,12 @@ logging:
         data:
           r2dbc:
             connectionfactory: DEBUG
+  file:
+    path: D:/logs/
 
-#jwt:
-#  secret-key: kyo
-#  expires-minutes: 1440 # 24hr
+jwt:
+  secret-key: testkyo
+  expires-minutes: 1440 # 24hr
 
 # apply actuator refresh, health, beans, httptrace, busrefresh
 management:
@@ -65,3 +78,6 @@ management:
       exposure:
         include: refresh,health,beans,httptrace,busrefresh
 
+
+daemon:
+  nick-name: kyo local

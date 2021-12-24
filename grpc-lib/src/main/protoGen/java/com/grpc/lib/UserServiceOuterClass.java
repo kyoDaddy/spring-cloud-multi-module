@@ -35,6 +35,11 @@ public final class UserServiceOuterClass {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_UpdateUserRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_DeleteUserRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_DeleteUserRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_UserResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -54,12 +59,16 @@ public final class UserServiceOuterClass {
       "mail\030\001 \001(\t\022\020\n\010fullName\030\002 \001(\t\022\020\n\010password" +
       "\030\003 \001(\t\022\027\n\017confirmPassword\030\004 \001(\t\"1\n\021Updat" +
       "eUserRequest\022\n\n\002id\030\001 \001(\003\022\020\n\010fullName\030\002 \001" +
-      "(\t\"M\n\014UserResponse\022\n\n\002id\030\001 \001(\003\022\r\n\005email\030" +
-      "\002 \001(\t\022\020\n\010fullName\030\003 \001(\t\022\020\n\010password\030\004 \001(" +
-      "\t2s\n\013UserService\022.\n\010findById\022\023.GetUserBy" +
-      "IdRequest\032\r.UserResponse\0224\n\013findByEmail\022" +
-      "\026.GetUserByEmailRequest\032\r.UserResponseB\020" +
-      "\n\014com.grpc.libP\001b\006proto3"
+      "(\t\"\037\n\021DeleteUserRequest\022\n\n\002id\030\001 \001(\003\"M\n\014U" +
+      "serResponse\022\n\n\002id\030\001 \001(\003\022\r\n\005email\030\002 \001(\t\022\020" +
+      "\n\010fullName\030\003 \001(\t\022\020\n\010password\030\004 \001(\t2\376\001\n\013U" +
+      "serService\022.\n\010findById\022\023.GetUserByIdRequ" +
+      "est\032\r.UserResponse\0224\n\013findByEmail\022\026.GetU" +
+      "serByEmailRequest\032\r.UserResponse\022+\n\006crea" +
+      "te\022\022.CreateUserRequest\032\r.UserResponse\022+\n" +
+      "\006update\022\022.UpdateUserRequest\032\r.UserRespon" +
+      "se\022/\n\ndeleteById\022\022.DeleteUserRequest\032\r.U" +
+      "serResponseB\020\n\014com.grpc.libP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -89,8 +98,14 @@ public final class UserServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UpdateUserRequest_descriptor,
         new java.lang.String[] { "Id", "FullName", });
-    internal_static_UserResponse_descriptor =
+    internal_static_DeleteUserRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
+    internal_static_DeleteUserRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_DeleteUserRequest_descriptor,
+        new java.lang.String[] { "Id", });
+    internal_static_UserResponse_descriptor =
+      getDescriptor().getMessageTypes().get(5);
     internal_static_UserResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserResponse_descriptor,
