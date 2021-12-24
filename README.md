@@ -8,60 +8,60 @@
 1. msa 구성
 ```
    1. spring-cloud 
-      1. discovery-service
-        1. eureka 
-      2. config-service
-        1. spring-cloud-config
-        2. spring-profile native 로 실행하기 
-      3. gateway-service
-        1. spring-cloud-gateway
+      a. discovery-service
+        - eureka 
+      b. config-service
+        - spring-cloud-config
+        - spring-profile native 로 실행하기 
+      c. gateway-service
+        - spring-cloud-gateway
    2. user-service
-      1. spring-webflux 
-      2. spring-security
-      3. r2dbc
-      4. grpc
+      a. spring-webflux 
+      b. spring-security
+      c. r2dbc
+      d. grpc
    3. item-service, order-service
-      1. spring-mvc 
-      2. restful api  
-      3. jpa 
+      a. spring-mvc 
+      b. restful api  
+      c. jpa 
    4. rabbitMQ
-      1. spring-cloud-config 사용 후 설정값 동기화
-      2. 경량 메시지 브로커 사용
-         1. [docker rabbitMQ 설치](https://devfunny.tistory.com/440)
+      a. spring-cloud-config 사용 후 설정값 동기화
+      b. 경량 메시지 브로커 사용
+         - [docker rabbitMQ 설치](https://devfunny.tistory.com/440)
    5. kafka
-      1. micro service 간 kafka 발행/구독 으로 데이터 동기화 사용
-      2. [docker kafka 설치](https://wedul.site/574)
+      a. micro service 간 kafka 발행/구독 으로 데이터 동기화 사용
+      b. [docker kafka 설치](https://wedul.site/574)
    6. msa 병목 확인 및 추적
-      1. resilience4j
-      2. spring-cloud-sleuth
-      3. zipkin
+      a. resilience4j
+      b. spring-cloud-sleuth
+      c. zipkin
    7. 모니터링
-      1. micrometer
-      2. prometheus
-      3. elk (elastic-search, logstash, kibana)
+      a. micrometer
+      b. prometheus
+      c. elk (elastic-search, logstash, kibana)
 ```
 
 2. db/cache 관련 
 ```
    1. rest api (hateoas) + jpa (hibernate + queryDsl) 사용
-      1. local profile
-         1. inmemory h2 db
-         2. inmemory redis cache
-         3. local caffeine cache
-      2. webflux + r2dbc 사용
-         1. user-service 구현해보니 R2DBC 를 사용해서 API 에 대한 요청은 처리할 수 있지만, JPA 의 기능은 지원하지 않는다...
-         2. 단순 Entity 를 조작하는 용도로 사용하겠는데, 그 이상의 용도로는 좀 더 다른 예제들을 찾아봐야할듯..
+      a. local profile
+         - inmemory h2 db
+         - inmemory redis cache
+         - local caffeine cache
+      b. webflux + r2dbc 사용
+         - user-service 구현해보니 R2DBC 를 사용해서 API 에 대한 요청은 처리할 수 있지만, JPA 의 기능은 지원하지 않는다...
+         - 단순 Entity 를 조작하는 용도로 사용하겠는데, 그 이상의 용도로는 좀 더 다른 예제들을 찾아봐야할듯..
 ```
 
 3. domain 기반 architecture 구성 ? cqrs 패턴을 사용?
 ```
    1. Command 도메인 DB와 Query 도메인의 DB를 분리하여, 각각의 도메인 목적에 맞게 집중하여 개발해볼까?
-        1. msa 확장 및 응용을 위해서 데이터가 저장되는 메시징 큐잉 서버를 
+        a. msa 확장 및 응용을 위해서 데이터가 저장되는 메시징 큐잉 서버를 
           이벤트 소싱 할때 데이터를 저장하는 파트와 저장되있는 데이터를 읽어오는 파트 구분해서 만드는 CQRS 패턴을 사용하면, 
           좀 더 효율적으로 메시징 기반의 시스템이 가능
-        2. 실제 주문이외에 사용자가 커맨드가 많지 않다고 판단
-        3. 관리자에서의 Command가 다량이고, 이걸 Query 도메인에 어떻게 싱크를 맞출지를 고민
-        4. ....근데 이건 다 대용량일때의 고민인듯.... 아무도 안들어오면 실제 그에 해당하는 소규모 구성이 관리 및 유지보수 용이...
+        b. 실제 주문이외에 사용자가 커맨드가 많지 않다고 판단
+        c. 관리자에서의 Command가 다량이고, 이걸 Query 도메인에 어떻게 싱크를 맞출지를 고민
+        d. ....근데 이건 다 대용량일때의 고민인듯.... 아무도 안들어오면 실제 그에 해당하는 소규모 구성이 관리 및 유지보수 용이...
 ```   
 
 4. network 구성 
